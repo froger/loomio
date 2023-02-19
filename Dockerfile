@@ -25,14 +25,14 @@ RUN gem update --system \
       ruby-charlock_holmes \
       ruby-nokogiri \
       # image processing
-      imagemagick \
+      vips \
       # gem using git
       git \
   && rm -rf /var/cache/apk/*
 
 
 WORKDIR $ROOT
-ADD Gemfile Gemfile.lock $ROOT
+ADD Gemfile Gemfile.lock $ROOT/
 RUN bundle config set --global without 'development:test' \
   && bundle config set --global path 'vendor' \
   && bundle install \
@@ -65,7 +65,7 @@ RUN gem update --system \
     # communicate with postgres through the postgres gem
     postgresql-dev \
     # for image processing
-    imagemagick \
+    vips \
     # allows gem to use git
     git \
     # seven_zip gem dep
