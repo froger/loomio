@@ -1,5 +1,5 @@
 FROM node:14-alpine3.17 as node
-FROM ruby:3.0-alpine3.15 as base
+FROM ruby:2.7.6-alpine3.15 as base
 ENV BUNDLE_BUILD__SASSC=--disable-march-tune-native
 ENV BUNDLE_WITHOUT=test:development
 ENV ROOT=/loomio
@@ -47,7 +47,7 @@ RUN SECRET_KEY_BASE="assets" bundle exec rails assets:precompile \
   && rm -rf node_modules tmp/* .npm .gem spec test
 WORKDIR /loomio
 
-FROM ruby:3.0-alpine3.15
+FROM ruby:2.7.6-alpine3.15
 ENV BUNDLE_BUILD__SASSC=--disable-march-tune-native
 ENV BUNDLE_WITHOUT=test:development
 ENV ROOT=/loomio
