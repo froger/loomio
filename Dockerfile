@@ -39,7 +39,6 @@ RUN bundle config set --global without 'development:test' \
   && mkdir -p $ROOT/tmp/pids $ROOT/tmp/sockets
 
 ADD . $ROOT
-ENV NODE_OPTIONS=--openssl-legacy-provider
 WORKDIR $ROOT/vue
 RUN npm ci \
   && npm run build
