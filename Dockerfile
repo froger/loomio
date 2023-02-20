@@ -42,8 +42,6 @@ ADD . $ROOT
 WORKDIR $ROOT/vue
 RUN npm ci \
   && npm run build
-RUN SECRET_KEY_BASE="assets" bundle exec rails assets:precompile \
-  && rm -rf node_modules tmp/* .npm .gem spec test
 WORKDIR /loomio
 
 FROM ruby:2.7.6-alpine3.15
