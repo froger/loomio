@@ -1,29 +1,25 @@
-name: Docker Image CI
+  name: Push into main branch
+  on:
+    push:
+      branches: [ "better-dockerfile" ]
 
-on:
-  push:
-    branches: [ "better-dockerfile" ]
-  pull_request:
-    branches: [ "better-dockerfile" ]
+  jobs:
+    context:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v3
 
-jobs:
+      - name: Build
+        id: build
+        uses: cloudposse/github-action-docker-build-push@main
+        with:
+          registry: registry.hub.docker.com
+          organization: "${{ github.event.repository.owner.login }}"
+          repository: "${{ github.event.repository.name }}"
+          login: "${{ secrets.DOCKERHUB_USERNAME }}"
+          password: "${{ secrets.DOCKERHUB_PASSWORD }}"
 
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build
-      id: build
-      uses: cloudposse/github-action-docker-build-push@main
-      with:
-        registry: registry.hub.docker.com
-        organization: "${{ github.event.repository.owner.login }}"
-        repository: "${{ github.event.repository.name }}"
-        login: "${{ secrets.DOCKERHUB_USERNAME }}"
-        password: "${{ secrets.DOCKERHUB_PASSWORD }}"
-        
-  outputs:
-    image: ${{ steps.build.outputs.image }}
-    tag: ${{ steps.build.outputs.tag }}
+      outputs:
+        image: ${{ steps.build.outputs.image }}
+        tag: ${{ steps.build.outputs.tag }}
