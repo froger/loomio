@@ -21,7 +21,7 @@ jobs:
 
       - name: Build and publish images
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/loomio:"${{ github.sha }}" -f "$file" ./bundle
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/loomio:"${{ github.sha }}" .
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/loomio:"${{ github.sha }}" ${{ secrets.DOCKERHUB_USERNAME }}/loomio:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/loomio:"${{ github.sha }}"
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/loomio:latest
